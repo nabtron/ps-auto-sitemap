@@ -1,9 +1,9 @@
 === PS Auto Sitemap ===
-Contributors: jim912
+Contributors: nabtron, jim912
 Tags: sitemap, post, page, seo, cms
 Requires at least: 2.3.1
-Tested up to: 4.2.2
-Stable tag: 1.1.9
+Tested up to: 5.8.2
+Stable tag: 2.0
 
 Auto generator of a customizable and designed sitemap page.
 
@@ -29,6 +29,11 @@ When you use WordPress as CMS of the Web site, you can expect the **effect of SE
 * Use or not caching sitemap content.
 
 = Latest change =
+* **2.0**
+ * Compatible up to WordPress 5.8.2
+ * change: Add [ps_auto_sitemap] shortcode support
+ * bugfix: Strict Standards error.
+
 * **1.1.9**
  * Compatible up to WordPress 4.2.2
  * bugfix: Strict Standards error.
@@ -83,8 +88,6 @@ Or, if you tell us the theme and your selected style, we might help you.
 
 == Links ==
 "[PS Disable Auto Formatting](http://wordpress.org/extend/plugins/ps-disable-auto-formatting/ "WordPress editting support plugin")"Stops the automatic forming and the HTML tag removal in the html mode of WordPress, and generates a natural paragraph and changing line.
-
-"[CMS service with WordPress](http://www.prime--strategy.co.jp/ "CMS service with WordPress")" provides you service that uses WordPress as a CMS.
 
 == Special Thanks ==
 = Translation: =

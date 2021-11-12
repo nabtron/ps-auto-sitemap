@@ -1,15 +1,36 @@
 <?php
 /*
 Plugin Name: PS Auto Sitemap
-Plugin URI: http://www.web-strategy.jp/wp_plugin/ps_auto_sitemap/
+Plugin URI: https://wordpress.org/plugins/ps-auto-sitemap/
 Description: Auto generator of a customizable and designed sitemap page.
-Author: Hitoshi Omagari
-Version: 1.1.9
-Author URI: http://www.warna.info/
+Author: nabtron
+Version: 2.0
+Author URI: http://www.nabtron.com/
 */
 
 class ps_auto_sitemap {
 
+ 
+	// added by nabtron
+	function shortcode_ps_auto_sitemap() {
+
+		$sitemap_content = '';
+	 
+		if ( isset( $_GET['category'] ) && $category = get_category( (int)$_GET['category'] ) ) {
+			$sitemap_content = $this->make_category_sitemap( $category );
+		} else {
+			$cache_dir = $this->check_cache_dir();
+			if ( $cache_dir && file_exists( $cache_dir . '/site_map_cache.html' ) && $this->option['use_cache'] ) {
+				$sitemap_content = file_get_contents( $cache_dir . '/site_map_cache.html' );
+			} else {
+				$sitemap_content = $this->create_sitemap_content();
+			}
+		}
+
+		return $sitemap_content;
+ 
+	}
+	
 	var $sitemap_prepared_styles = array(
 		'simple'		=> 'Simple',
 		'simple2'		=> 'Simple2',
@@ -33,6 +54,8 @@ class ps_auto_sitemap {
 		global $wp_version;
 		$this->wp_version = $wp_version;
 		
+		add_shortcode( 'ps_auto_sitemap', [$this, 'shortcode_ps_auto_sitemap'] );
+
 		add_action( 'init'        , array( $this, 'ps_auto_sitemap_init') );
 		add_action( 'publish_post', array( $this, 'delete_sitemap_cache') );
 		add_action( 'publish_page', array( $this, 'delete_sitemap_cache') );
@@ -344,7 +367,6 @@ ORDER BY	`posts`.`post_date` DESC";
 		}
 		?>
 		<div class=wrap>
-			<?php if ( function_exists( 'screen_icon' ) ) { screen_icon(); } ?>
 			<h2>PS Auto Sitemap</h2>
 			<?php if ( $ret ) { ?>
 			<div id="message" class="updated">
@@ -453,6 +475,8 @@ ORDER BY	`posts`.`post_date` DESC";
 			</form>
 			<div class="ps_sitemap_installation">
 				<h3><?php _e( 'Usage', 'ps_auto_sitemap' ); ?></h3>
+				<p>Use <code>[ps_auto_sitemap]</code> shortcode on any page to show the sitemap. </p>
+				<p>Following is for legacy support</p>
 				<ol>
 					<li><?php _e( 'Post a page that will use as the sitemap page.', 'ps_auto_sitemap' ); ?></li>
 					<li><?php _e( 'Insert following code in the content area. (<strong>Use HTML mode</strong>)', 'ps_auto_sitemap' ); ?>
